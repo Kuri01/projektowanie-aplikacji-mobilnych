@@ -59,18 +59,6 @@ const color_boxes_by_id: TColorBoxes = {
   10: "blue",
 };
 
-const text_colors_by_id: TColorBoxes = {
-  1: "black",
-  2: "black",
-  3: "black",
-  5: "white",
-  6: "black",
-  7: "black",
-  8: "black",
-  9: "black",
-  10: "black",
-};
-
 const generateGrid = (
   rows: number,
   cols: number,

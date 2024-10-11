@@ -51,7 +51,7 @@ Wymagany do uruchamiania symulatora iOS. Możesz go pobrać z [Mac App Store](ht
 Najpierw sklonuj repozytorium projektu na swój lokalny komputer:
 
 ```bash
-git clone https://github.com/twoja-nazwa-uzytkownika/projektowanie-aplikacji-mobilnych.git
+git clone https://github.com/Kuri01/projektowanie-aplikacji-mobilnych.git
 ```
 
 Przejdź do katalogu projektu:

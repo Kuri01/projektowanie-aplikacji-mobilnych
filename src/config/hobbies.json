@@ -1,0 +1,12 @@
+[
+  { "id": "sport" },
+  { "id": "music" },
+  { "id": "reading" },
+  { "id": "travel" },
+  { "id": "gaming" },
+  { "id": "cooking" },
+  { "id": "photography" },
+  { "id": "drawing" },
+  { "id": "dancing" },
+  { "id": "hiking" }
+]

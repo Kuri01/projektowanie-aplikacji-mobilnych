@@ -1,11 +1,8 @@
-import React from "react";
-import Calculator from "./components/Calculator";
-import {PaperProvider} from "react-native-paper";
+import React from 'react';
+import AppNavigator from './src/AppNavigator';
 
-export default function App() {
-    return (
-        <PaperProvider>
-            <Calculator />
-        </PaperProvider>
-    );
-}
+const App = () => {
+    return <AppNavigator/>;
+};
+
+export default App;

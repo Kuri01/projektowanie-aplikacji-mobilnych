@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, Button, StyleSheet, Alert} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../AppNavigator';
 import {Task} from '../types';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {MaterialIcons} from '@expo/vector-icons';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'TaskDetails'>;
 
 const TaskDetailsScreen: React.FC<Props> = ({route, navigation}) => {
-    const {task, onUpdate} = route.params;
+    const {task, onUpdate, onDelete} = route.params;
     const [currentTask, setCurrentTask] = useState<Task>(task);
 
     const toggleDone = () => {
@@ -18,20 +18,60 @@ const TaskDetailsScreen: React.FC<Props> = ({route, navigation}) => {
         navigation.goBack();
     };
 
+    const handleEdit = () => {
+        navigation.navigate('AddEditTask', {
+            task: currentTask,
+            onSave: (updatedTask: Task) => {
+                setCurrentTask(updatedTask);
+                onUpdate(updatedTask);
+                navigation.goBack();
+            },
+        });
+    };
+
+    const handleDelete = () => {
+        Alert.alert(
+            'Usuń zadanie',
+            'Czy na pewno chcesz usunąć to zadanie?',
+            [
+                {text: 'Anuluj', style: 'cancel'},
+                {
+                    text: 'Usuń',
+                    style: 'destructive',
+                    onPress: () => {
+                        onDelete(currentTask.id);
+                        navigation.goBack();
+                    },
+                },
+            ]
+        );
+    };
+
     return (
         <View style={styles.container}>
             <MaterialIcons
                 name={currentTask.done ? 'check-circle' : 'radio-button-unchecked'}
                 size={100}
+                color={currentTask.done ? 'green' : 'red'}
                 style={styles.icon}
             />
             <Text style={styles.title}>{currentTask.title}</Text>
             <Text style={styles.description}>{currentTask.description}</Text>
 
-            <Button
-                title={currentTask.done ? 'Oznacz jako niewykonane' : 'Oznacz jako wykonane'}
-                onPress={toggleDone}
-            />
+            <View style={styles.buttonsContainer}>
+                <Button
+                    title={currentTask.done ? 'Oznacz jako niewykonane' : 'Oznacz jako wykonane'}
+                    onPress={toggleDone}
+                />
+            </View>
+
+            <View style={{marginTop: 20}}>
+                <Button title="Edytuj zadanie" onPress={handleEdit}/>
+            </View>
+
+            <View style={{marginTop: 20}}>
+                <Button title="Usuń zadanie" onPress={handleDelete} color="red"/>
+            </View>
         </View>
     );
 };
@@ -43,7 +83,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20,
         alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: '#fff'
     },
     icon: {
@@ -59,5 +98,9 @@ const styles = StyleSheet.create({
         color: '#333',
         marginBottom: 30,
         textAlign: 'center'
+    },
+    buttonsContainer: {
+        width: '100%',
+        marginBottom: 10
     }
 });
